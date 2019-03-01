@@ -86,7 +86,8 @@ void CIndividual::obj_eval()
 	//world problems...
         if(!strcmp("RWP1", strTestInstance))  RWP1(y_obj, x_var);
         if(!strcmp("RWP2", strTestInstance))  RWP2(y_obj, x_var);
-
+	//Example FEM
+        if(!strcmp("FEM", strTestInstance))  FEM(y_obj, x_var);
 
 }
 void CIndividual::show_objective()

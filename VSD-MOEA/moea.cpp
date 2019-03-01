@@ -51,6 +51,14 @@ void InitializeBounds(int nvar, char * Instance)
                    vuppBound[i]=3.0;
                 }
         }
+	if( !strcmp("FEM", Instance))
+        {
+                for(int i = 0 ;  i < nvar; i++)
+                {
+                   vlowBound[i]=1.0;
+                   vuppBound[i]=3.0;
+                }
+        }
 
 }
 void PrintHelp()

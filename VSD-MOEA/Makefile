@@ -8,7 +8,7 @@ LDFLAGS=
 UBUNTUFLAGS=-lm $(LDFLAGS) -lstdc++ -std=c++11 -fopenmp
 OPENSUSEFLAGS=-lm $(LDFLAGS)
 DEBUG=-O2
-OBJS:=moea.o RealLife-MOPs.o cec09.o
+OBJS:=moea.o RealLife-MOPs.o cec09.o FEM.o
 MAIN=Ejecutable
 all:$(MAIN)
 ubuntu:
