@@ -58,7 +58,6 @@ public:
 //
 //	// algorithm parameters
 	long long int nfes;
-//	int     nfes, max_nfes;          //  the number of function evluations
 
 };
 
@@ -233,74 +232,6 @@ void MOEA::update_domianted_information(vector<CIndividual*> &survivors, vector<
 }
 void MOEA::select_first_survivors(vector<CIndividual*> &survivors, vector<CIndividual*> &candidates)
 {
-////////////////##1
-	//first compute the nadir point ideal vector...
-///        for(int m = 0; m < nobj; m++)
-/// 	{	
-///	   nadir[m] = -DBL_MAX;
-///	   for(int i = 0; i < candidates.size(); i++)
-///	   {
-///		nadir[m] = max(nadir[m], candidates[i]->y_obj[m]);
-///	   }
-///	}
-///        vector<vector< double > > artifitial_vectors(nobj, vector<double>(nobj));
-///        for(int m = 0; m < nobj; m++)
-///	{
-///           for(int m1 = 0; m1 < nobj; m1++)
-///	      artifitial_vectors[m][m1] = nadir[m1];
-///	      artifitial_vectors[m][m] = ideal[m];
-///	}
-//	for(int m = 0 ; m < nobj; m++)
-//	{
-//		int indxmaxim = 0 ;
-//		double bestvector = INFINITY;
-//		for(int i = 0; i <  candidates.size(); i++)
-//		 {	
-//			double maxv = candidates[i]->y_obj[m];// distance_improvement(artifitial_vectors[m], candidates[i]->y_obj);
-//		        if(bestvector > maxv )
-//		        { indxmaxim = i; bestvector = maxv;}
-//		 }
-//		survivors.push_back( candidates[indxmaxim]);
-//		iter_swap(candidates.begin()+indxmaxim, candidates.end()-1);
-//		candidates.pop_back();
-//	}
-//return;
-//////////////////##2
-////
-//	vector<bool> grid(candidates.size(), false);
-//	for(int m = 0 ; m < nobj; m++)
-//	{
-//		int indxmaxim = -1 ;
-//		double bestvector = -INFINITY;
-//		for(int i = 0; i <  candidates.size(); i++)
-//		 {	
-//			if(grid[i]) continue;
-//			double maxv = 0.0;
-//			for(int j = 0; j < candidates.size(); j++)
-//			{
-//			   if( i==j ) continue;
-//			   maxv += distance_improvement(candidates[j]->y_obj, candidates[i]->y_obj);
-//			}
-//			
-//		        if(bestvector < maxv )
-//		        { indxmaxim = i; bestvector = maxv;}
-//		 }
-//		if(indxmaxim==-1)break;
-//		survivors.push_back(candidates[indxmaxim]);
-//		iter_swap(candidates.begin()+indxmaxim, candidates.end()-1);
-//		candidates.pop_back();
-//		iter_swap(grid.begin()+indxmaxim, grid.end()-1);
-//		grid.pop_back();
-//		for(int i = 0; i <  candidates.size(); i++)
-//		{
-//		   if(grid[i])continue;
-//		   if( (*candidates[indxmaxim]) < (*candidates[i]) ) grid[i]=true;
-//		}
-//	
-//
-//	
-//	}
-////////////////##3
 	///Select the best improvement distance candidates....
 	for(int m = 0; m < nobj; m++)
 	{
@@ -492,8 +423,8 @@ void MOEA::exec_emo(int run)
 	nfes      = 0;
 	init_population(); //Initialize individuals...
 
-	sprintf(filename1,"%s/POS/Scalability/POS_VSD-MOEA_%s_RUN_%d_seed_%d_nvar_%d_nobj_%d.dat_bounded_Di_%lf_nfes_%lld",currentPATH, strTestInstance,run, seed, nvar, nobj, Initial_lowest_distance_factor/sqrt(nvar), max_nfes);
-	sprintf(filename2,"%s/POF/Scalability/POF_VSD-MOEA_%s_RUN_%d_seed_%d_nvar_%d_nobj_%d.dat_bounded_Di_%lf_nfes_%lld",currentPATH, strTestInstance,run, seed, nvar, nobj, Initial_lowest_distance_factor/sqrt(nvar), max_nfes);
+	sprintf(filename1,"%s/POS/POS_VSD-MOEA_%s_RUN_%d_seed_%d_nvar_%d_nobj_%d.dat_bounded_Di_%lf_nfes_%lld",currentPATH, strTestInstance,run, seed, nvar, nobj, Initial_lowest_distance_factor/sqrt(nvar), max_nfes);
+	sprintf(filename2,"%s/POF/POF_VSD-MOEA_%s_RUN_%d_seed_%d_nvar_%d_nobj_%d.dat_bounded_Di_%lf_nfes_%lld",currentPATH, strTestInstance,run, seed, nvar, nobj, Initial_lowest_distance_factor/sqrt(nvar), max_nfes);
 	save_front(filename2); //save the objective space information
 	save_pos(filename1); //save the decision variable space information
         long long nfes1 = nfes, nfes2 = nfes;
@@ -506,13 +437,12 @@ void MOEA::exec_emo(int run)
 	    
 	    nfes2 = nfes;
 	   countnfes += (nfes2 - nfes1);
-	//   if(  countnfes > 0.1*max_nfes  )
-	//    {	
-	//      countnfes -= 0.1*max_nfes;
-        //      save_front(filename2); //save the objective space information
-	//      save_pos(filename1); //save the decision variable space information
-	//      cout << "nfes... "<< nfes <<endl;
-	//    }
+	   if(  countnfes > 0.1*max_nfes  )
+	    {	
+	      countnfes -= 0.1*max_nfes;
+              save_front(filename2); //save the objective space information
+	      save_pos(filename1); //save the decision variable space information
+	    }
 	}
 	save_pos(filename1); //save the decision variable space information
         save_front(filename2); //save the objective space information
