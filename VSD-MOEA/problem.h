@@ -10,6 +10,7 @@
 
 #include "cec09.h"
 #include "RealLife-MOPs.h"
+//#include "FEM.h"
 
 //// Toolkit includes. //////////////////////////////////////////////////////
 
@@ -378,6 +379,10 @@ void RWP1(std::vector<double> &F, std::vector<double> &X)
 void RWP2(std::vector<double> &F, std::vector<double> &X)
 {
         RealLife_MOPs::CWD( &(*(X.begin())),  &(*(F.begin())));
+}
+void FEM(std::vector<double> &F, std::vector<double> &X)
+{
+        FEM_MOEA::implementationFEM( &(*(X.begin())),  &(*(F.begin())));
 }
 
 #endif
